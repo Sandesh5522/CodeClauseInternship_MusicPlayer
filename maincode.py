@@ -4,12 +4,12 @@ import os
 
 sg.theme('DarkAmber')
 
-filenames = []
+listvalues = []
 
 layout = [
     [sg.Text('Python Music Player!!', justification='center', size=(100,1))],
     [sg.FolderBrowse(key = 'FolderBrowse'), sg.Text(key = 'path')],
-    [sg.Multiline(key = 'folder', size = (40,20)), sg.Listbox(filenames, key = 'folder', size = (40,20))],
+    [sg.Multiline(key = 'folder', size = (40,20)), sg.Listbox(listvalues, key = 'files', size = (40,20))],
     [sg.Button('Prev'), sg.Button('Play'), sg.Button('Next')],
     [sg.Submit(), sg.Button('Cancel')]
 ]
@@ -25,9 +25,13 @@ while True:
         # window['path'].update('selected folder path: ',foldername)
         # filenames = os.listdir(foldername)
         filenames = os.walk(foldername)
+        f = []
+        for (dirpath, dirnames, filenames) in os.walk(foldername):
+            f.extend(filenames)
         # window['folder'].update("\n".join(filenames))
-        window['folder'].update(filenames)
-        print(filenames)
+        # window['files'].update(f)
+        listvalues.append(f)
+        window['files'].update(listvalues)
         window['path'].update('selected folder path: ',foldername)
 
 # https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723

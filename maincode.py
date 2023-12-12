@@ -7,7 +7,7 @@ sg.theme('DarkAmber')
 layout = [
     [sg.Text('Python Music Player!!')],
     [sg.Image(), sg.FolderBrowse('FolderBrowse')],
-    [sg.Multiline(key = 'folder', size = (40,40), auto_refresh = True, auto_size_text = True, autoscroll = True)],
+    [sg.Multiline(key = 'folder', size = (40,30))],#auto_refresh = True, auto_size_text = True, autoscroll = True
     [sg.Submit(), sg.Button('Cancel')]
 ]
 
@@ -25,5 +25,6 @@ while True:
 
 print("https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723")
 print("https://stackoverflow.com/questions/63725995/how-to-display-files-in-folder-when-using-pysimplegui-filebrowse-function")
-
+# To restrict a file type
+# layout =  [[sg.In() ,sg.FileBrowse(file_types=(("Text Files", "*.txt"),))]]
 window.close()

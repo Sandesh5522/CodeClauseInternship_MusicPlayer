@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
 import pygame as pg
+import glob
 import os
+import pathlib
 
 sg.theme('DarkAmber')
 
@@ -24,15 +26,33 @@ while True:
         foldername = values['FolderBrowse'] or '.'
         # window['path'].update('selected folder path: ',foldername)
         # filenames = os.listdir(foldername)
-        filenames = os.walk(foldername)
+        # files = os.walk(foldername)
         f = []
+        paths = []
         for (dirpath, dirnames, filenames) in os.walk(foldername):
             f.extend(filenames)
-        # window['folder'].update("\n".join(filenames))
-        # window['files'].update(f)
-        listvalues.append(f)
+            paths.extend(dirnames)
+            # print("D:/SONGS/HINDI SONGS/",dirpath,"/",dirnames,"/",filenames)
+            # print(os.path.abspath(filenames[0]))
+            # print(os.path.join(dirpath[0], filenames[0]))
+        # print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
+        print(glob.glob(foldername+'/*.*', recursive = True))
+        # print(paths)
+        listvalues = f
+        window['folder'].update(paths)
+        # listvalues.append(f)
+        listvalues.append(values)
         window['files'].update(listvalues)
-        window['path'].update('selected folder path: ',foldername)
+    elif event == 'Play':
+        print("selected song: ",window['files'].get())
+        songfile = window['files'].get()[0]
+        spath = 'D:/SONGS/HINDI SONGS/*.'+songfile
+        # print(glob.glob(spath))
+        spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
+        # print(spath)
+        print(glob.glob('**/'+songfile+'.mp3', recursive=True))
+        print(os.fspath(songfile))
+
 
 # https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723
 # https://stackoverflow.com/questions/63725995/how-to-display-files-in-folder-when-using-pysimplegui-filebrowse-function

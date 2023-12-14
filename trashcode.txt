@@ -1,0 +1,4 @@
+
+print(glob.glob('**/'+songfile+'.mp3', recursive=True))
+
+spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')

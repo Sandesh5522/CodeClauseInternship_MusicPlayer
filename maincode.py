@@ -29,14 +29,21 @@ while True:
         # files = os.walk(foldername)
         f = []
         paths = []
+        songpaths = {}
         for (dirpath, dirnames, filenames) in os.walk(foldername):
             f.extend(filenames)
             paths.extend(dirnames)
+            songpaths[dirpath] = filenames
             # print("D:/SONGS/HINDI SONGS/",dirpath,"/",dirnames,"/",filenames)
             # print(os.path.abspath(filenames[0]))
             # print(os.path.join(dirpath[0], filenames[0]))
         # print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
-        print(glob.glob(foldername+'/*.*', recursive = True))
+        songkey = list(songpaths.keys())
+        songvalue = list(songpaths.values())
+        print(songpaths)
+        print(songkey)
+        print(songvalue)
+        # print(glob.glob(foldername+'/*.*', recursive = True))
         # print(paths)
         listvalues = f
         window['folder'].update(paths)
@@ -49,9 +56,11 @@ while True:
         spath = 'D:/SONGS/HINDI SONGS/*.'+songfile
         # print(glob.glob(spath))
         spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
+        for k,v in songpaths.items():
+            if songfile == v:
+                print(k)
+        print(songkey[songvalue.index(songfile)])
         # print(spath)
-        print(glob.glob('**/'+songfile+'.mp3', recursive=True))
-        print(os.fspath(songfile))
 
 
 # https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723

@@ -40,9 +40,10 @@ while True:
         # print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
         songkey = list(songpaths.keys())
         songvalue = list(songpaths.values())
-        print(songpaths)
-        print(songkey)
-        print(songvalue)
+        songvalue = songvalue[0]
+        # print(songpaths)
+        # print(songkey)
+        # print(songvalue)
         # print(glob.glob(foldername+'/*.*', recursive = True))
         # print(paths)
         listvalues = f
@@ -58,8 +59,15 @@ while True:
         spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
         for k,v in songpaths.items():
             if songfile == v:
-                print(k)
-        print(songkey[songvalue.index(songfile)])
+                print("key from value:",k)
+        print("song index: ",songvalue.index(songfile))
+        findvalue = songvalue.index(songfile)
+        print("song path: ",songkey[findvalue])
+        import pprint
+        pp = pprint.PrettyPrinter(indent = 4)
+        pp.pprint(songkey)
+        pp.pprint(songvalue)
+        pp.pprint(songpaths)
         # print(spath)
 
 

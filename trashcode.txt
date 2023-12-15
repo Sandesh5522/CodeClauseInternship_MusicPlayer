@@ -2,3 +2,29 @@
 print(glob.glob('**/'+songfile+'.mp3', recursive=True))
 
 spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
+
+print("song index: ",songvalue.index(songfile))
+print("song index: ",songpaths.index(songfile))
+findvalue = songvalue.index(songfile)
+print("song path: ",songkey[findvalue])
+
+for key,value in songpaths.items():
+if songfile == value:
+print("key from value:",key)
+
+https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723
+https://stackoverflow.com/questions/63725995/how-to-display-files-in-folder-when-using-pysimplegui-filebrowse-function
+To restrict a file type
+layout =  [[sg.In() ,sg.FileBrowse(file_types=(("Text Files", "*.txt"),))]]
+
+spath = 'D:/SONGS/HINDI SONGS/*.'+songfile
+print(glob.glob(spath))
+spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
+
+import pprint
+pp = pprint.PrettyPrinter(indent = 0)
+pp.pprint(songkey)
+pp.pprint(songvalue)
+pp.pprint(songpaths)
+
+print(glob.glob(foldername+'/*.*', recursive = True))

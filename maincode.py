@@ -5,6 +5,9 @@ import os
 import pathlib
 
 sg.theme('DarkAmber')
+sg.set_options(text_color=("Black"),\
+               font=("Consolas", 10),\
+                text_element_background_color=("Grey"))
 
 listvalues = []
 
@@ -16,7 +19,7 @@ layout = [
     [sg.Submit(), sg.Button('Cancel')]
 ]
 
-window = sg.Window('Python Music Player', layout)
+window = sg.Window('Python Music Player', layout, resizable=True)
 
 while True:
     event, values = window.read()
@@ -41,11 +44,7 @@ while True:
         songkey = list(songpaths.keys())
         songvalue = list(songpaths.values())
         songvalue = songvalue[0]
-        # print(songpaths)
-        # print(songkey)
-        # print(songvalue)
         # print(glob.glob(foldername+'/*.*', recursive = True))
-        # print(paths)
         listvalues = f
         window['folder'].update(paths)
         # listvalues.append(f)
@@ -54,25 +53,15 @@ while True:
     elif event == 'Play':
         print("selected song: ",window['files'].get())
         songfile = window['files'].get()[0]
-        spath = 'D:/SONGS/HINDI SONGS/*.'+songfile
-        # print(glob.glob(spath))
-        spath = pathlib.Path('.').glob('**/'+songfile+'.mp3')
-        for k,v in songpaths.items():
-            if songfile == v:
-                print("key from value:",k)
-        print("song index: ",songvalue.index(songfile))
-        findvalue = songvalue.index(songfile)
-        print("song path: ",songkey[findvalue])
-        import pprint
-        pp = pprint.PrettyPrinter(indent = 4)
-        pp.pprint(songkey)
-        pp.pprint(songvalue)
-        pp.pprint(songpaths)
-        # print(spath)
+        for i in songpaths.keys():#songkey:
+            for j in songpaths[i]:
+                if j == songfile:
+                    fpath = i+"/"+j
+                    print("song path: ",fpath)
+# import pprint
+# pp = pprint.PrettyPrinter(indent = 0)
+# pp.pprint(songkey)
+# pp.pprint(songvalue)
+# pp.pprint(songpaths)
 
-
-# https://github.com/PySimpleGUI/PySimpleGUI/issues/4393#issuecomment-859296723
-# https://stackoverflow.com/questions/63725995/how-to-display-files-in-folder-when-using-pysimplegui-filebrowse-function
-# To restrict a file type
-# layout =  [[sg.In() ,sg.FileBrowse(file_types=(("Text Files", "*.txt"),))]]
 window.close()

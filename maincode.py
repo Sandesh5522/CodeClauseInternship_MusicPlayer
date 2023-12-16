@@ -25,7 +25,7 @@ layout = [
 ]
 
 window = sg.Window('Python Music Player', layout, resizable=True, use_custom_titlebar=True, \
-                   titlebar_icon='C:\code\CodeClause internship projects\CodeClauseInternship_MusicPlayer\music_16px.png', \
+                   titlebar_icon='music_16px.png', \
                     titlebar_background_color='Black', titlebar_text_color='White', \
                         titlebar_font='Consolas', text_justification='center')
 

@@ -10,8 +10,6 @@ sg.set_options(text_color=("Black"),\
                font=("Consolas", 10),\
                 text_element_background_color=("Grey"))
 
-# icon = "C:\code\CodeClause internship projects\CodeClauseInternship_MusicPlayer\music1_127px.ico"
-
 listvalues = []
 
 layout = [
@@ -48,10 +46,6 @@ while True:
             f.extend(filenames)
             paths.extend(dirnames)
             songpaths[dirpath] = filenames
-            # print("D:/SONGS/HINDI SONGS/",dirpath,"/",dirnames,"/",filenames)
-            # print(os.path.abspath(filenames[0]))
-            # print(os.path.join(dirpath[0], filenames[0]))
-        # print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
         songkey = list(songpaths.keys())
         songvalue = list(songpaths.values())
         songvalue = songvalue[0]
@@ -62,7 +56,7 @@ while True:
         window['files'].update(listvalues)
     elif event == 'pbutton':
         songfile = window['files'].get()[0]
-        for i in songpaths.keys():#songkey:
+        for i in songpaths.keys():
             for j in songpaths[i]:
                 if j == songfile:
                     fpath = i+"/"+j
@@ -71,9 +65,6 @@ while True:
         mixer.music.set_volume(0.7)
         mixer.music.play()
         ispaused = False
-        # elif mixer.music.get_busy() == True:
-        #     ispaused = True
-        #     mixer.music.pause()
     elif event == 'Pause':
         if mixer.music.get_busy() == True:
             ispaused = True

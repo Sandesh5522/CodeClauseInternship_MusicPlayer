@@ -31,3 +31,10 @@ print(glob.glob(foldername+'/*.*', recursive = True))
 
 filenames = os.listdir(foldername)
 files = os.walk(foldername)
+
+print("D:/SONGS/HINDI SONGS/",dirpath,"/",dirnames,"/",filenames)
+print(os.path.abspath(filenames[0]))
+print(os.path.join(dirpath[0], filenames[0]))
+print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
+
+icon = "C:\code\CodeClause internship projects\CodeClauseInternship_MusicPlayer\music1_127px.ico"

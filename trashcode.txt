@@ -28,3 +28,6 @@ pp.pprint(songvalue)
 pp.pprint(songpaths)
 
 print(glob.glob(foldername+'/*.*', recursive = True))
+
+filenames = os.listdir(foldername)
+files = os.walk(foldername)

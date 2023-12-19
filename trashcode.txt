@@ -38,3 +38,22 @@ print(os.path.join(dirpath[0], filenames[0]))
 print(glob.glob('D:/SONGS/HINDI SONGS/*.*'))
 
 icon = "C:\code\CodeClause internship projects\CodeClauseInternship_MusicPlayer\music1_127px.ico"
+
+mixer.music.set_volume(0.7)
+mixer.music.set_volume(volume['vslider']/100)
+mixer.music.get_volume()
+mixer.music.set_volume()
+
+import ctypes
+
+myappid = 'mycompany.myproduct.subproduct.version'
+# arbitrary string
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+import pygame as pg
+import glob
+import pathlib
+
+songkey = list(songpaths.keys())
+songvalue = list(songpaths.values())
+songvalue = songvalue[0]

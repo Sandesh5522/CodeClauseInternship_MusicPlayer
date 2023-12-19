@@ -15,7 +15,7 @@ sg.set_options(text_color=("Black"),\
             #    font=("Consolas", 10),\
             #    font=("Constantia", 10), \
                 font=("Bahnschrift", 10), \
-                text_element_background_color=("Grey"))
+                text_element_background_color=("Grey"), margins=(5,5,5,5))
 
 foldernames = []
 listvalues = []
@@ -25,7 +25,7 @@ layout = [
     [sg.FolderBrowse(key = 'FolderBrowse'), sg.Text(key = 'path')],
     [sg.Listbox(foldernames, key = 'folder', size = (40,20)), \
      sg.Listbox(listvalues, key = 'files', size = (60,20))],
-    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'), \
+    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'),
      sg.Slider(range=(0,100), size=(50,20),  orientation='horizontal', resolution=1, \
         enable_events=True, key = 'vslider', default_value=100)],
     [sg.Submit(), sg.Cancel()]
@@ -34,7 +34,7 @@ layout = [
 window = sg.Window('Python Music Player', layout, resizable=True, \
                 #   Turn custom titlebar on to see the custom titlebar
                 #   but the custom titlebar dosent show the logo on taskbar.
-                #   use_custom_titlebar=True, \
+                    # use_custom_titlebar=True, \
                     titlebar_icon='music_16px.png', \
                     # icon file names icons8_music.ico music_16px.png
                     icon='icons8_music.ico', \

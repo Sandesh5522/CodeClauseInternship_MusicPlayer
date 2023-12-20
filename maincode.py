@@ -11,9 +11,9 @@ if sys.platform.startswith('win'):
 
 sg.theme('DarkAmber')
 sg.set_options(text_color=("Black"),\
-            #    Some good fonts.
-            #    font=("Consolas", 10),\
-            #    font=("Constantia", 10), \
+            #   Some good fonts.
+                # font=("Consolas", 10), \
+                # font=("Constantia", 10), \
                 font=("Bahnschrift", 10), \
                 text_element_background_color=("Grey"), margins=(5,5,5,5))
 
@@ -36,11 +36,11 @@ window = sg.Window('Python Music Player', layout, resizable=True, \
                 #   but the custom titlebar dosent show the logo on taskbar.
                     # use_custom_titlebar=True, \
                     titlebar_icon='music_16px.png', \
-                    # icon file names icons8_music.ico music_16px.png
-                    icon='icons8_music.ico', \
-                    # titlebar_background_color='Black', titlebar_text_color='White', \
+                #   icon file names music_16px.png icons8_music_64px.ico
+                    icon='icons8_music_64px.ico', \
+                    titlebar_background_color='Black', titlebar_text_color='White', \
                     # titlebar_font='Consolas', 
-                    # titlebar_font="Constantia", text_justification='center'
+                    titlebar_font="Constantia", text_justification='center'
                     )
 
 mixer.init()

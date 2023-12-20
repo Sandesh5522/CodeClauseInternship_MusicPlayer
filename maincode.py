@@ -22,11 +22,12 @@ listvalues = []
 
 layout = [
     [sg.Text('Python Music Player!!', justification='center', size=(100,1))],
-    [sg.FolderBrowse(key = 'FolderBrowse'), sg.Text(key = 'path')],
+    [sg.FolderBrowse(key = 'FolderBrowse'), sg.Text('Selected Folder path: ',key = 'path')],
+    [sg.Text('Now playing: ',key='now_playing')],
     [sg.Listbox(foldernames, key = 'folder', size = (40,20)), \
      sg.Listbox(listvalues, key = 'files', size = (60,20))],
-    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'),
-     sg.Slider(range=(0,100), size=(50,20),  orientation='horizontal', resolution=1, \
+    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'), sg.Button('Prev'), sg.Button('Next')],
+    [sg.Slider(range=(0,100), size=(50,20),  orientation='horizontal', resolution=1, \
         enable_events=True, key = 'vslider', default_value=100)],
     [sg.Submit(), sg.Cancel()]
 ]
@@ -45,17 +46,17 @@ window = sg.Window('Python Music Player', layout, resizable=True, \
 
 mixer.init()
 
+f = []
+paths = []
+songpaths = {}
+
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == 'Cancel':
         break
     elif event == 'Submit':
         foldername = values['FolderBrowse'] or '.'
-        path = 'Selected folder path: '+foldername
-        window['path'].update(value = path)
-        f = []
-        paths = []
-        songpaths = {}
+        window['path'].update('Selected folder path: '+foldername)
         for (dirpath, dirnames, filenames) in os.walk(foldername):
             f.extend(filenames)
             paths.extend(dirnames)
@@ -68,6 +69,7 @@ while True:
         window['files'].update(listvalues)
     elif event == 'Play':
         songfile = window['files'].get()[0]
+        window['now_playing'].update("Now playing: "+songfile)
         for i in songpaths.keys():
             for j in songpaths[i]:
                 if j == songfile:
@@ -82,6 +84,36 @@ while True:
             mixer.music.unpause()
     elif event == 'Stop':
         mixer.music.stop()
+    elif event == 'Prev':
+        for i in f:
+            if i == songfile:
+                current_index = f.index(i)
+                current_index = current_index-1
+        prev_song = f[current_index]
+        window['now_playing'].update("Now playing: "+prev_song)
+        for i in songpaths.keys():
+            for j in songpaths[i]:
+                if j == prev_song:
+                    fpath = i+"/"+j
+                    print("song path: ",fpath)
+        window['files'].update(set_to_index=current_index)
+        mixer.music.load(fpath)
+        mixer.music.play()
+    elif event == 'Next':
+        for i in f:
+            if i == songfile:
+                current_index = f.index(i)
+                current_index = current_index+1
+        next_song = f[current_index]
+        window['now_playing'].update("Now playing: "+next_song)
+        for i in songpaths.keys():
+            for j in songpaths[i]:
+                if j == next_song:
+                    fpath = i+"/"+j
+                    print("song path: ",fpath)
+        window['files'].update(set_to_index=current_index)
+        mixer.music.load(fpath)
+        mixer.music.play()
     elif event == 'vslider':
         volume = values['vslider']
         mixer.music.set_volume(volume/100)

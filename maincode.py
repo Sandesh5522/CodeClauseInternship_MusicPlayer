@@ -97,6 +97,7 @@ while True:
                     fpath = i+"/"+j
                     print("song path: ",fpath)
         window['files'].update(set_to_index=current_index)
+        songfile = prev_song
         mixer.music.load(fpath)
         mixer.music.play()
     elif event == 'Next':
@@ -112,6 +113,7 @@ while True:
                     fpath = i+"/"+j
                     print("song path: ",fpath)
         window['files'].update(set_to_index=current_index)
+        songfile = next_song
         mixer.music.load(fpath)
         mixer.music.play()
     elif event == 'vslider':

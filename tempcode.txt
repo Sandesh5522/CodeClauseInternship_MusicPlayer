@@ -57,3 +57,35 @@ import pathlib
 songkey = list(songpaths.keys())
 songvalue = list(songpaths.values())
 songvalue = songvalue[0]
+
+def songplay(f, songpaths, songfile):
+    for i in f:
+        if i == songfile:
+            current_index = f.index(i)
+    songname = f[current_index]
+    window['now_playing'].update("Now playing: "+songname)
+    for i in songpaths.keys():
+            for j in songpaths[i]:
+                if j == songname:
+                    fpath = i+"/"+j
+                    print("song path: ",fpath)
+    window['files'].update(set_to_index=current_index)
+    songfile = songname
+    return fpath
+
+for i in f:
+            if i == songfile:
+                current_index = f.index(i)
+                current_index = current_index-1
+        prev_song = f[current_index]
+        window['now_playing'].update("Now playing: "+prev_song)
+        for i in songpaths.keys():
+            for j in songpaths[i]:
+                if j == prev_song:
+                    fpath = i+"/"+j
+                    print("song path: ",fpath)
+        window['files'].update(set_to_index=current_index)
+        songfile = prev_song
+
+window['folder'].hide_row()
+window['folder'].unhide_row()

@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 from pygame import mixer
 import os
-
 import sys
 
 # This bit gets the taskbar icon working properly in Windows.
@@ -15,7 +14,7 @@ sg.set_options(text_color=("Black"),\
                 # font=("Consolas", 10), \
                 # font=("Constantia", 10), \
                 font=("Bahnschrift", 10), \
-                text_element_background_color=("Grey"), margins=(5,5,5,5))
+                text_element_background_color=("Grey"), margins=(5,5,5,5), auto_size_buttons=True, auto_size_text=True)
 
 foldernames = []
 listvalues = []
@@ -25,8 +24,9 @@ layout = [
     [sg.FolderBrowse(key = 'FolderBrowse'), sg.Text('Selected Folder path: ',key = 'path')],
     [sg.Text('Now playing: ',key='now_playing')],
     [sg.Listbox(foldernames, key = 'folder', size = (40,20)), \
-     sg.Listbox(listvalues, key = 'files', size = (60,20))],
-    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'), sg.Button('Prev'), sg.Button('Next')],
+     sg.Listbox(listvalues, key = 'files', size = (60,20))], #highlight_background_color='Grey', background_color='Black', text_color='Grey', highlight_text_color='Black'
+    [sg.Button('Play'), sg.Button('Pause'), sg.Button('Stop'), \
+     sg.Button('Prev'), sg.Button('Next'), sg.Button('Minimize')],
     [sg.Slider(range=(0,100), size=(50,20),  orientation='horizontal', resolution=1, \
         enable_events=True, key = 'vslider', default_value=100)],
     [sg.Submit(), sg.Cancel()]
@@ -49,6 +49,22 @@ mixer.init()
 f = []
 paths = []
 songpaths = {}
+
+def songplay(f : list, songpaths : dict, songfile : str, o : int):
+    for i in f:
+        if i == songfile:
+            current_index = f.index(i)
+            if o == 1:
+                current_index = current_index + 1
+            elif o == -1:
+                current_index = current_index - 1
+    songname = f[current_index]
+    for i in songpaths.keys():
+            for j in songpaths[i]:
+                if j == songname:
+                    fpath = i+"/"+j
+                    # print("song path: ",fpath)
+    return [songname, current_index, fpath]
 
 while True:
     event, values = window.read()
@@ -79,45 +95,32 @@ while True:
         mixer.music.play()
     elif event == 'Pause':
         if mixer.music.get_busy() == True:
+            window['Pause'].update('Resume')
             mixer.music.pause()
         elif mixer.music.get_busy() != True:
+            window['Pause'].update('Pause')
             mixer.music.unpause()
     elif event == 'Stop':
         mixer.music.stop()
     elif event == 'Prev':
-        for i in f:
-            if i == songfile:
-                current_index = f.index(i)
-                current_index = current_index-1
-        prev_song = f[current_index]
-        window['now_playing'].update("Now playing: "+prev_song)
-        for i in songpaths.keys():
-            for j in songpaths[i]:
-                if j == prev_song:
-                    fpath = i+"/"+j
-                    print("song path: ",fpath)
-        window['files'].update(set_to_index=current_index)
-        songfile = prev_song
-        mixer.music.load(fpath)
+        details = songplay(f, songpaths, songfile, -1)
+        songfile = details[0]
+        window['now_playing'].update("Now playing: "+details[0])
+        window['files'].update(set_to_index=details[1])
+        mixer.music.load(details[2])
         mixer.music.play()
     elif event == 'Next':
-        for i in f:
-            if i == songfile:
-                current_index = f.index(i)
-                current_index = current_index+1
-        next_song = f[current_index]
-        window['now_playing'].update("Now playing: "+next_song)
-        for i in songpaths.keys():
-            for j in songpaths[i]:
-                if j == next_song:
-                    fpath = i+"/"+j
-                    print("song path: ",fpath)
-        window['files'].update(set_to_index=current_index)
-        songfile = next_song
-        mixer.music.load(fpath)
+        details = songplay(f, songpaths, songfile, 1)
+        songfile = details[0]
+        window['now_playing'].update("Now playing: "+details[0])
+        window['files'].update(set_to_index=details[1])
+        mixer.music.load(details[2])
         mixer.music.play()
     elif event == 'vslider':
         volume = values['vslider']
         mixer.music.set_volume(volume/100)
+    elif event == 'Minimize':
+        window['folder'].set_size(size=(40,4))
+        window['files'].set_size(size=(40,4))
 
 window.close()

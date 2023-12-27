@@ -120,7 +120,13 @@ while True:
         volume = values['vslider']
         mixer.music.set_volume(volume/100)
     elif event == 'Minimize':
-        window['folder'].set_size(size=(40,4))
-        window['files'].set_size(size=(40,4))
+        if window['folder'].get_size() == (282,342) and window['files'].get_size() == (422,342):
+            window['folder'].set_size(size=(40,4))
+            window['files'].set_size(size=(40,4))
+            window['Minimize'].update('Maximize')
+        elif window['folder'].get_size() == (282,70) and window['files'].get_size() == (282,70):
+            window['folder'].set_size(size=(40,20))
+            window['files'].set_size(size=(60,20))
+            window['Minimize'].update('Minimize')
 
 window.close()
